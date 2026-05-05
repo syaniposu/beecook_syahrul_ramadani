@@ -132,6 +132,8 @@
 </section>
 
 
+<input type="hidden" class="page_pgntn" value="1">
+
 
 
 <script>
@@ -184,7 +186,7 @@
                 url: "<?=base_url($this->uri->segment('1').'/getByCategory')?>",
                 method: "GET",
                 dataType: 'json',
-                data: { id: id },
+                data: { id: id ,page : $('.page_pgntn').val()},
                 beforeSend: function(){
                     $('.hasil_menu').html('<p class="text-center">Loading...</p>');
                 },
@@ -218,7 +220,7 @@
 
                     $('.hasil_menu').html(html);
                 },
-                error: function(){
+                error : function (jqXHR, textStatus, errorThrown){
                     $('.hasil_menu').html('<p>Gagal load data</p>');
                     swal('Error','Gagal '+jqXHR+'_'+textStatus+'_'+errorThrown+'\n','error');
                 }
