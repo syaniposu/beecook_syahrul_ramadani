@@ -57,6 +57,25 @@ class M_curl extends CI_Model {
         }
 
 
+        if ($put['method']=='PUT' ) {
+
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => $put['url'], 
+                CURLOPT_RETURNTRANSFER => true, 
+                CURLOPT_ENCODING => "", 
+                CURLOPT_MAXREDIRS => 10, 
+                CURLOPT_TIMEOUT => 10, 
+                CURLOPT_FOLLOWLOCATION => true, 
+                CURLOPT_HTTP_VERSION => 
+                CURL_HTTP_VERSION_1_1, 
+                CURLOPT_CUSTOMREQUEST => $put['method'], 
+                CURLOPT_POSTFIELDS => ['image' => new CURLFile($put['post']['file_tmp'], $put['post']['file_type'], $put['post']['file_name'])], 
+                
+            ));
+        }
+
+
 
         $response = curl_exec($curl);
         $getinfo=curl_getinfo($curl);

@@ -283,7 +283,72 @@ class Kelola extends CI_Controller {
 
 
     function upload(){
-        echo "uploaded";
+
+        // echo json_encode($_POST);
+        // exit();
+
+        $idne=(int)$_POST['id_menu'];
+
+        if(isset($_FILES['gambar'])){
+
+            $file = $_FILES['gambar'];
+
+            // baca file
+
+            $dataa=[
+                'file_tmp'  => $file['tmp_name'],
+                'file_name' => $file['name'],
+                'file_type' => $file['type'],
+            ];
+            
+
+            $data=[
+                'url'=> baseUrl().'menu/upload/'.$idne,
+                'method'=>'PUT',
+                'post' => $dataa,
+                'header' => ["Content-Type:application/json"]
+            ];
+
+            $cr=json_decode($this->m_curl->get(json_encode($data)),true);
+
+            if ($cr['status']=='error') {
+            
+                echo "<pre>".json_encode($cr,JSON_PRETTY_PRINT)."</pre>";
+
+            }else{
+
+                ?>
+                <script>
+                    swal('Success','Data berhasil diupload','success')
+                    $('#previewImage').attr('src', '').addClass('d-none');
+                    $('#placeholder').show();
+                    $('.view_gambar').modal('toggle');
+                    loadData();
+                    $('.btnUpload').prop('disabled',false);
+                </script>
+                <?
+            }
+
+            // echo "<pre>".json_encode($cr,JSON_PRETTY_PRINT)."</pre>";
+
+            // echo 
+
+
+            /*[
+                'image' => new CURLFile($file_tmp, $file_type, $file_name)
+            ]
+
+            CURLOPT_POSTFIELDS => array('image'=> new CURLFILE('cmMtdXBsb2FkLTE3Nzc1MTQ1NDEzNTYtMjA=/bumbu-sate-madura.jpg')),*/
+
+            // convert ke base64
+            // $file_data = base64_encode(file_get_contents($file_tmp));
+
+            // kirim ke API pakai CURL
+            // $response = $this->kirim_api($file_name, $file_type, $file_data);
+
+            // echo json_encode($response);
+        }
+
     }
 
 

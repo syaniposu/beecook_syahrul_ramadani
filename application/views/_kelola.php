@@ -140,7 +140,7 @@
 
         <a href="<?=base_url($this->uri->segment('1').'/tambah')?>" class="btn btn-warning py-2 px-5 text-white bg-warning-new mt-4">Tambah Resep</a>
 
-        <table class="table table-sm mt-5 z-2 table_kelola" style="background:none !important">
+        <table class="table  mt-5 z-2 table_kelola" style="background:none !important">
             <thead>
                 <tr>
                     <th>Nama Resep</th>
@@ -152,6 +152,29 @@
             <tbody></tbody>
             
         </table>
+
+        <div class="d-flex align-items-center">
+            <div class="me-4">
+                <button class="btn btn-light btn-circle btn_previous disabled" onclick="pagePrev()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                      <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                    </svg>
+                </button>
+                
+            </div>
+            <div class="me-3 currentPage"></div>
+            <div class="me-3">of</div>
+            <div class="me-4 totalPage"></div>
+            <div class="me-3">
+                <button class="btn btn-light btn-circle btn_next disabled" onclick="pageNext()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708"/>
+                      <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
 
 
 
@@ -238,6 +261,7 @@
                 </div>
 
                 <div class="modal-footer">
+                    <div class="hasil_upload float-start"></div>
                     <button type="button" class="btn btn-sm btn-light border px-3" data-bs-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-sm btn-primary px-3" id="btnUpload">Upload</button>
                 </div>
@@ -248,12 +272,24 @@
     </div>
 </div>
 
+<input type="hidden" class="page_pgntn" value="1" onchange="loadData()">
+
 
 
 
 
 
 <script>
+
+    function pagePrev(){
+        $('.page_pgntn').val(parseInt($('.page_pgntn').val())-parseInt(1)).trigger('change');
+        
+    }
+
+    function pageNext(){
+        $('.page_pgntn').val(parseInt($('.page_pgntn').val())+parseInt(1)).trigger('change');
+        
+    }
 
     $('#btnUpload').click(function(){
 
@@ -266,6 +302,7 @@
         }
 
         formData.append('gambar', file);
+        formData.append('id_menu', $('.id_menu').val());
 
         $.ajax({
             url: "<?=base_url($this->uri->segment('1').'/upload')?>",
@@ -275,20 +312,21 @@
             contentType: false,
 
             beforeSend: function(){
-                $('#btnUpload').text('Uploading...');
+                $('#btnUpload').text('Uploading...').prop('disabled',true);
             },
 
             success: function(res){
-                console.log(res);
-                alert('Upload berhasil');
+                $('.hasil_upload').html(res);
             },
 
             error: function(){
                 alert('Upload gagal');
+                $('#btnUpload').prop('disabled',false);
             },
 
             complete: function(){
                 $('#btnUpload').text('Upload');
+                $('#btnUpload').prop('disabled',false);
             }
         });
 
@@ -336,15 +374,15 @@
             url: "<?=base_url('category/getByCategory')?>",
             method: "GET",
             dataType: 'json',
-            data: { id: 'all' },
+            data: { id: 'all' ,page: $('.page_pgntn').val()},
             beforeSend: function(){
                 $('.loading_load').show();
             },
             success: function(data){
+
+                $('.table_kelola > tbody').empty();
                 
                 if(data.menus && data.menus.length > 0){
-
-                    $('.table_kelola > tbody').empty();
 
                     data.menus.forEach(function(item){
 
@@ -357,7 +395,7 @@
                                     <div class="d-flex justify-content-center">
                                         <div class="text-danger mx-1 cp" onclick="delData('${item.id}')">Del</div>
                                         <a href="<?=base_url($this->uri->segment('1').'/edit/')?>${item.id}" class="text-primary mx-1 cp text-decoration-none">Edit</a>
-                                        <div class="text-success mx-1 cp" data-bs-toggle="modal" data-bs-target=".view_gambar">Gambar</div>
+                                        <div class="text-success mx-1 cp" onclick="uploadGambar('${item.id}')">Gambar</div>
                                     </div>
                                 </td>
                             </tr>`;                   
@@ -366,10 +404,26 @@
                         
                     });
 
+                    $('.totalPage').html(data.totalPages);
+                    $('.currentPage').html(data.currentPage);
+
+                    if (data.currentPage==1) {
+                        $('.btn_previous').addClass('disabled');
+                    }else{
+                        $('.btn_previous').removeClass('disabled');
+                    }
+
+
+                    if (data.currentPage==data.totalPages) {
+                        $('.btn_next').addClass('disabled');
+                    }else{
+                        $('.btn_next').removeClass('disabled');
+                    }
+
                     
 
                 } else {
-                    $('.hasil_ajax').html('Data tidak ada');
+                    $('.hasil_ajax').html('<center>Data tidak ada</center>');
                 }
 
                 $('.loading_load').hide();
@@ -419,6 +473,14 @@
           }); 
         }
       });
+    }
+
+
+    function uploadGambar(id){
+        $('.id_menu').val(id);
+        $('.view_gambar').modal('toggle');
+        $('#previewImage').attr('src', '').addClass('d-none');
+        $('#placeholder').show();
     }
 
 

@@ -41,15 +41,17 @@ class Category extends CI_Controller {
 	function getByCategory(){
 
 		$id=(int)$_GET['id'];
+		$page=(int)$_GET['page'];
 
 		$idnew=$id==0?'':$id;
+		$pagenew=$page==0?'1':$page;
 		
 		// if ($id==0) {
 		// 	// code...
 		// }
 
 		$data=[
-            'url'=> baseUrl().'menu?page=1&limit=15&search=&category_id='.$idnew,
+            'url'=> baseUrl().'menu?page='.$pagenew.'&limit=10&search=&category_id='.$idnew,
             'method'=>'GET',
             'header' => ["Content-Type:application/json"]
         ];
