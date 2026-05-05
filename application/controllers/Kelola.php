@@ -282,4 +282,9 @@ class Kelola extends CI_Controller {
     }
 
 
+    function upload(){
+        echo "uploaded";
+    }
+
+
 }

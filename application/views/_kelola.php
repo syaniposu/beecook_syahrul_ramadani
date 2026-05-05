@@ -96,6 +96,38 @@
     cursor: pointer;
 }
 
+
+
+.upload-box {
+  border: 1px dashed #ddd;
+  border-radius: 15px;
+  background: #fdfdfd;
+}
+
+.preview-box {
+  width: 100%;
+  height: 220px;
+  background: #eee;
+  border-radius: 12px;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* gambar full width */
+.preview-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* biar tidak gepeng */
+}
+
+#placeholder {
+  font-size: 40px;
+  color: #fdfdfd;
+}
+
 </style>
 
 
@@ -136,10 +168,163 @@
 
 
 
+<div class="modal fade view_gambar" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <form id="formUpload">
+
+                <input type="hidden" name="id_menu" class="id_menu">
+
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <h4 class="modal-title text-center" id="exampleModalLabel" style="margin-top: -20px;">Upload Gambar</h4>
+
+                
+
+                <div class="modal-body p-5">
+
+                      <div class="upload-box text-center p-5 mb-3 mx-3">
+                        <input type="file" name="gambar" id="fileInput" hidden accept="image/*">
+
+                        <div>
+                          <div class="mb-2 fs-1">
+                              
+                                <svg width="70" height="51" viewBox="0 0 70 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6.05172 8.74547L17.2131 6.88524V40.7377L12.3018 41.7717C9.01306 42.464 5.79705 40.3203 5.17081 37.0184L1.14319 15.7818C0.515988 12.4748 2.73148 9.29884 6.05172 8.74547Z" stroke="#2563EB" stroke-width="2"/>
+                                <path d="M63.9483 8.74547L52.7869 6.88524V40.7377L57.6982 41.7717C60.9869 42.464 64.203 40.3203 64.8292 37.0184L68.8568 15.7818C69.484 12.4748 67.2685 9.29884 63.9483 8.74547Z" stroke="#2563EB" stroke-width="2"/>
+                                <g filter="url(#filter0_d_301876_3295)">
+                                <rect x="17.0654" y="1" width="35.8689" height="42.7541" rx="5" stroke="#2563EB" stroke-width="2" shape-rendering="crispEdges"/>
+                                </g>
+                                <path d="M38.9824 33.0893C39.7831 34.0105 41.215 34.0058 42.0098 33.0796L47.2451 26.976L52.9346 33.0981V38.7544C52.9344 41.5156 50.6958 43.7542 47.9346 43.7544H22.0654C19.3041 43.7544 17.0656 41.5157 17.0654 38.7544V35.2934L29.4727 22.145L38.9824 33.0893Z" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"/>
+                                <circle cx="39.5897" cy="14.3443" r="4.16393" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"/>
+                                <defs>
+                                <filter id="filter0_d_301876_3295" x="13.0654" y="0" width="43.8691" height="50.7541" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                                <feOffset dy="3"/>
+                                <feGaussianBlur stdDeviation="1.5"/>
+                                <feComposite in2="hardAlpha" operator="out"/>
+                                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"/>
+                                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_301876_3295"/>
+                                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_301876_3295" result="shape"/>
+                                </filter>
+                                </defs>
+                                </svg>
+
+                          </div>
+                          <p class="mb-1">
+                            Drop your files here or 
+                            <span class="text-primary fw-semibold" style="cursor:pointer;" onclick="$('#fileInput').click()">browse</span>
+                          </p>
+                          <small class="text-secondary">Maximum size: 50MB</small>
+                        </div>
+                      </div>
+
+                      <!-- Preview -->
+                      <p class="mb-1 mt-2">Preview</p>
+                      <div class="preview-box d-flex justify-content-center align-items-center">
+                        <img id="previewImage" src="" class="img-fluid d-none">
+                        <span id="placeholder">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="70" fill="#ccc" class="bi bi-file-image" viewBox="0 0 16 16">
+                              <path d="M8.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                              <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v8l-2.083-2.083a.5.5 0 0 0-.76.063L8 11 5.835 9.7a.5.5 0 0 0-.611.076L3 12z"/>
+                            </svg>
+                        </span>
+                      </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-light border px-3" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-primary px-3" id="btnUpload">Upload</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
 
 
 
 <script>
+
+    $('#btnUpload').click(function(){
+
+        let formData = new FormData();
+        let file = $('#fileInput')[0].files[0];
+
+        if(!file){
+            alert('Pilih gambar dulu!');
+            return;
+        }
+
+        formData.append('gambar', file);
+
+        $.ajax({
+            url: "<?=base_url($this->uri->segment('1').'/upload')?>",
+            method: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+
+            beforeSend: function(){
+                $('#btnUpload').text('Uploading...');
+            },
+
+            success: function(res){
+                console.log(res);
+                alert('Upload berhasil');
+            },
+
+            error: function(){
+                alert('Upload gagal');
+            },
+
+            complete: function(){
+                $('#btnUpload').text('Upload');
+            }
+        });
+
+    });
+
+    $('#fileInput').on('change', function(e){
+        let file = e.target.files[0];
+
+        if(file){
+            let reader = new FileReader();
+
+            reader.onload = function(e){
+                $('#previewImage')
+                    .attr('src', e.target.result)
+                    .removeClass('d-none');
+
+                $('#placeholder').hide();
+            }
+
+            reader.readAsDataURL(file);
+        }
+    });
+
+    $('.upload-box').on('dragover', function(e){
+        e.preventDefault();
+    });
+
+    $('.upload-box').on('drop', function(e){
+        e.preventDefault();
+
+        let file = e.originalEvent.dataTransfer.files[0];
+        $('#fileInput')[0].files = e.originalEvent.dataTransfer.files;
+        $('#fileInput').trigger('change');
+    });
+
+
     $(document).ready(function(){
 
         loadData()
@@ -172,7 +357,7 @@
                                     <div class="d-flex justify-content-center">
                                         <div class="text-danger mx-1 cp" onclick="delData('${item.id}')">Del</div>
                                         <a href="<?=base_url($this->uri->segment('1').'/edit/')?>${item.id}" class="text-primary mx-1 cp text-decoration-none">Edit</a>
-                                        <div class="text-success mx-1 cp">Gambar</div>
+                                        <div class="text-success mx-1 cp" data-bs-toggle="modal" data-bs-target=".view_gambar">Gambar</div>
                                     </div>
                                 </td>
                             </tr>`;                   
