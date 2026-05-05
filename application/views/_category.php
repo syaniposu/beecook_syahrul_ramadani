@@ -203,7 +203,7 @@
                                                 <div>
                                                     <span class="badge text-bg-primary">${item.category.name}</span>
                                                 </div>
-                                                <div class="d-flex align-items-center gap-1 text-secondary"><?=getIconClock()?><span>${item.cooking_duration} m</span></div>
+                                                <div class="d-flex align-items-center gap-2 text-secondary"><?=getIconClock()?><span>${item.cooking_duration} m</span></div>
                                             </div>
                                             <h5 class="card-title fw-bold mt-3">${item.name}</h5>
                                         </div>

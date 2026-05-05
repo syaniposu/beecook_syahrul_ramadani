@@ -96,11 +96,7 @@ class Category extends CI_Controller {
         // exit();
 
         if ($cr['status']=='error') {
-            ?>
-            <script type="text/javascript">
-                swal("<?=$cr['data']?>","","info");
-            </script>
-            <?
+            echo "<pre>".json_encode($cr,JSON_PRETTY_PRINT)."</pre>";
         }else{
 
         	// echo "<pre>".json_encode($cr['data'],JSON_PRETTY_PRINT)."</pre>";

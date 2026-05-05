@@ -28,6 +28,10 @@
       .text-warning-new{
         color: #e8b431 !important;
       }
+
+      .bg-warning-new{
+        background: #e8b431 !important;
+      }
     </style>
   </head>
 
@@ -58,7 +62,7 @@
               <a class="nav-link fw-bold <?=($uri1=='category')?'active':''?> mx-3 fs-5" href="<?=base_url('category')?>" >Resep</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link fw-bold mx-3 fs-5 <?=($uri1=='kelola')?'active':''?>" href="#">Kelola</a>
+              <a class="nav-link fw-bold  mx-3 fs-5 <?=($uri1=='kelola')?'active':''?>" href="<?=base_url('kelola')?>">Kelola</a>
             </li>
           </ul>
           
@@ -69,6 +73,10 @@
       </div>
     </nav>
 
+
+    <div class="loading_load" style="top:0;position:fixed ;width: 100%;height: 100%;background: rgba(255,255,255,0.8);z-index: 1001;">
+      <div style="position:absolute;z-index:1002;top: 48%;left: 35%;text-align:center;color: #000;width: 30%;"><i class="fas fa-fw fa-spinner fa-spin"></i> Loading</div>
+    </div>
 
 
 
@@ -164,6 +172,9 @@
   <script src="<?=base_url()?>assets/dist/js/bootstrap.min.js"></script>
 
   <script>
+    $(document).ready(function(){
+      $('.loading_load').hide();
+    })
     function clickHarga(){
       $('html').animate({
           scrollTop: $('#section_harga').offset().top

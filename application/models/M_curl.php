@@ -22,7 +22,7 @@ class M_curl extends CI_Model {
     	// var_dump($put);
     	// var_dump(base64_decode($put['post']));
 
-        if ($put['method']=='GET') {
+        if ($put['method']=='GET' || $put['method']=='DELETE' ) {
             $curl = curl_init();
             curl_setopt_array($curl, array(
                 CURLOPT_URL => $put['url'], 
@@ -38,7 +38,7 @@ class M_curl extends CI_Model {
             ));
         }
 
-        if ($put['method']=='POST') {
+        if ($put['method']=='POST' || $put['method']=='PATCH') {
 
         	$curl = curl_init();
             curl_setopt_array($curl, array(
@@ -88,7 +88,7 @@ class M_curl extends CI_Model {
                 // echo json_encode($data_response);
                 // exit();
 
-            	if ($data_response['code']=='200') {
+            	if ($data_response['status']=='success') {
                     // echo json_encode($data_response);
             		$data=[
     	        		'status' => 'success',
@@ -99,7 +99,7 @@ class M_curl extends CI_Model {
 
             		$data=[
     	        		'status' => 'error',
-    	        		'data' => $data_response['message'],
+    	        		'data' => $data_response['data'],
                         'http_code' => $getinfo['http_code']
     	        	];
             	}

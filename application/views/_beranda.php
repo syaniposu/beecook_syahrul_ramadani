@@ -144,7 +144,7 @@
                     
                 </div>
                 <div class="py-5 my-2">
-                    <button class="btn btn-dark px-5 py-3">Eksplor Sekarang</button>
+                    <a href="<?=base_url('category')?>" class="btn btn-dark px-5 py-3">Eksplor Sekarang</a>
                 </div>
                 <div class="d-flex align-items-center">
                     <div class="d-flex me-2">
