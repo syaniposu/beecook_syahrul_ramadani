@@ -149,7 +149,7 @@
 
 
             <div class="row mt-5">
-                <div class="col-md-6">
+                <div class="col-md-6 mb-4">
                     <div class="card shadow border-0">
 
                         <div class="card-body p-3 p-md-5">
@@ -195,7 +195,7 @@
                 </div>
             </div>
 
-            <div class="col-md-12 text-end mt-5">
+            <div class="col-md-12 text-end mt-3">
                 <button class="btn btn-warning py-3 px-5 fw-bold bg-warning-new text-white">Simpan Resep</button>
             </div>
 
