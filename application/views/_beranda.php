@@ -124,6 +124,39 @@
 }
 
 
+
+
+.hero-title {
+  font-weight: bold;
+  font-size: 85px;
+}
+
+.hero-title-img {
+  width: 70px;
+  top:-10px;
+  left:-14px
+}
+
+.hero-subtitle {
+  font-size: 60px;
+}
+
+/* mobile */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 28px;
+  }
+
+  .hero-title-img {
+    width: 30px;
+    top:-10px;
+    left:-10px
+  }
+
+  .hero-subtitle {
+    font-size: 23px;
+  }
+}
 </style>
 <section class="hero py-5">
 
@@ -134,17 +167,17 @@
             <div class="d-flex flex-column">
                 <div class="d-flex flex-column">
                     <div class="d-flex align-top">
-                        <div class="fw-bolder me-3" style="font-size:85px">Where </div>
-                        <div class="fw-bolder text-warning-new" style="font-size:85px">Quality</div>
-                        <div ><img class="position-relative" src="<?=base_url('assets/stars.png')?>" width="70" style="top:-18px;left:-14px"></div>
+                        <div class="fw-bolder me-md-3 me-1 hero-title">Where </div>
+                        <div class="fw-bolder text-warning-new hero-title" >Quality</div>
+                        <div ><img class="position-relative hero-title-img" src="<?=base_url('assets/stars.png')?>" ></div>
                     </div>
                     <div class="" style="line-height:25px">
-                        <div style="font-size:60px">Meets <b>Flavor.</b> </div>
+                        <div class="hero-subtitle">Meets <b>Flavor.</b> </div>
                     </div>
                     
                 </div>
-                <div class="py-5 my-2">
-                    <a href="<?=base_url('category')?>" class="btn btn-dark px-5 py-3">Eksplor Sekarang</a>
+                <div class="py-3 py-md-5 my-2">
+                    <a href="<?=base_url('category')?>" class="btn btn-dark px-md-5 py-md-3 px-2 py-1 text-sm">Eksplor Sekarang</a>
                 </div>
                 <div class="d-flex align-items-center">
                     <div class="d-flex me-2">
@@ -152,7 +185,7 @@
                         <img src="<?=base_url('assets/avatar/people2.png')?>" class="rounded-circle avatar z-2">
                         <img src="<?=base_url('assets/avatar/people3.png')?>" class="rounded-circle avatar z-1">
                     </div>
-                    <span class="ms-3 fw-medium fs-5">1.000+ Pengguna</span>
+                    <span class="ms-3 fw-medium fs-md-5 fs-6 text-center">1.000+ Pengguna</span>
                 </div>
             </div>
         
@@ -170,7 +203,7 @@
 
 <section class="hero2 py-5 my-5">
 
-    <div class="d-flex justify-content-center fw-bold">
+    <div class="d-flex flex-column flex-md-row justify-content-center align-items-center align-items-md-start fw-bold">
 
         <div class="text-dark">
             <h1>Eksplor berdasarkan</h1>
@@ -183,7 +216,7 @@
 
     </div>
 
-    <div class="d-flex justify-content-center mt-4 pt-2 hasil_get_category" >
+    <div class="row justify-content-center mt-4 pt-2 hasil_get_category" >
 
         Loading...
 
@@ -223,7 +256,7 @@
         <div class="row align-items-center">
 
           <!-- TEXT -->
-          <div class="col-md-6">
+          <div class="col-md-6 order-md-1 order-2 p-4 p-md-0">
             <h2 class="fw-bold mb-3">
               Dapatan menu menarik setiap hari
             </h2>
@@ -245,7 +278,7 @@
           </div>
 
           <!-- IMAGE -->
-          <div class="col-md-6 text-center">
+          <div class="col-md-6 text-center order-md-2 order-1 p-5 p-md-0">
             <div class="chef-wrapper">
               <img src="<?=base_url('assets/people-chef-subscribe.png')?>" alt="chef" class="img-fluid chef-img">
             </div>
