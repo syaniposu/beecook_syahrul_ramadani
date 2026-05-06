@@ -73,10 +73,10 @@
   color: #fff;
   border-radius: 12px;
   padding: 15px 0px;
-  width: 175px;
+  width: 100%;
   border: none;
   transition: 0.3s;
-  margin:0px 10px;
+  
   
 }
 
@@ -107,7 +107,7 @@
           <div class="overlay"></div>
 
           <!-- Content -->
-          <div class="content position-absolute top-50 start-0 translate-middle-y px-5">
+          <div class="content position-absolute top-50 start-0 translate-middle-y px-md-5 px-4">
             <p class="text-warning mb-2">Sedang Trending</p>
             <h2 class="fw-bold">Nasi Goreng Udang Mentega</h2>
           </div>
@@ -115,23 +115,28 @@
         </div>
 
 
-        <div class="d-flex kategori-filter mt-4 justify-content-center">
+        <div class="row kategori-filter mt-4 px-3 px-md-0 justify-content-center">
 
             
 
         </div>
 
-        <div class="row container justify-content-center hasil_menu mt-4">
+        <div class="row justify-content-center hasil_menu mt-4 px-3 px-md-1">
 
            
             
            
         </div>
+
+        <ul class="pagination justify-content-center mt-5" id="pagination">
+            
+        </ul>
 
     </div>
 </section>
 
 
+<input type="hidden" class="data_id" value="all">
 <input type="hidden" class="page_pgntn" value="1">
 
 
@@ -144,12 +149,12 @@
             url: "<?=base_url('category/getCategory')?>",
             dataType: 'json',
             success: function(data){
-                 let html = '<button class="btn kategori-btn active data_all" data-id="all">Semua</button>';
+                 let html = '<div class="col-md-2 col-6"><button class="btn kategori-btn mb-2 active data_all" data-id="all">Semua</button></div>';
                  if(data.categories && data.categories.length > 0){
 
                     data.categories.forEach(function(item){
                         html += `
-                        <button class="btn kategori-btn" data-id="${item.id}">${item.name}</button>`;
+                        <div class="col-md-2 col-6"><button class="btn kategori-btn mb-2" data-id="${item.id}">${item.name}</button></div>`;
                     });
 
                 } else {
@@ -179,7 +184,17 @@
             // tambah active ke yang diklik
             $(this).addClass('active');
 
-            let id = $(this).data('id');
+            $('.data_id').val($(this).data('id'));
+
+            $('.page_pgntn').val('1');
+
+            loadData();
+
+        })
+
+
+        function loadData(){
+            let id = $('.data_id').val();
 
             // AJAX
             $.ajax({
@@ -196,12 +211,12 @@
 
                         data.menus.forEach(function(item){
                             html += `
-                                <div class="col-md-4 p-4">
+                                <div class="col-md-4 col-6 p-2 p-md-4">
                                     <a href="<?=base_url($this->uri->segment('1').'/resep/')?>${item.id}" style="text-decoration:none !important">
                                     <div class="card shadow">
                                         <img src="<?=base_url('assets/nasi-goreng-with-satay.png')?>" class="card-img-top" alt="...">
                                         <div class="card-body">
-                                            <div class="d-flex justify-content-between">
+                                            <div class="d-flex flex-column flex-md-row justify-content-between">
                                                 <div>
                                                     <span class="badge text-bg-primary">${item.category.name}</span>
                                                 </div>
@@ -218,6 +233,8 @@
                         html = `<p>Tidak ada kategori</p>`;
                     }
 
+                    renderPagination(data.currentPage,data.totalPages)
+
                     $('.hasil_menu').html(html);
                 },
                 error : function (jqXHR, textStatus, errorThrown){
@@ -225,10 +242,44 @@
                     swal('Error','Gagal '+jqXHR+'_'+textStatus+'_'+errorThrown+'\n','error');
                 }
             });
+        }
 
-        })
+
+        function renderPagination(current, total) {
+
+            let html = '';
+
+            // 🔹 Prev
+            html += `
+              <li class="page-item ${current == 1 ? 'disabled' : ''}">
+                <a class="page-link" href="#" onclick="clickPage('${current - 1}')">Previous</a>
+              </li>
+            `;
+
+            // 🔹 Number
+            for (let i = 1; i <= total; i++) {
+                html += `
+                  <li class="page-item ${i == current ? 'active' : ''}">
+                    <a class="page-link" href="#" onclick="clickPage('${i}')">${i}</a>
+                  </li>
+                `;
+            }
+
+            // 🔹 Next
+            html += `
+              <li class="page-item ${current == total ? 'disabled' : ''}">
+                <a class="page-link" href="#" onclick="clickPage('${current + 1}')">Next</a>
+              </li>
+            `;
+
+            $('#pagination').html(html);
+        }
 
 
+        function clickPage(val){
+            $('.page_pgntn').val(val);
+            loadData();
+        }
 
 
 </script>

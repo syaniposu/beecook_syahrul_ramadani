@@ -150,8 +150,8 @@ $datane=$data['menu'];
           <div class="overlay"></div>
 
           <!-- Content -->
-          <div class="content position-absolute top-50 start-0 translate-middle-y px-5">
-            <h1 class="fw-bold"><?=$datane['name']?></h1>
+          <div class="content position-absolute top-50 start-0 translate-middle-y px-4 px-md-5">
+            <h1 class="fw-bold text-center text-md-normal"><?=$datane['name']?></h1>
           </div>
 
         </div>
